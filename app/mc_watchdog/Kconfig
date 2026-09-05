@@ -1,0 +1,37 @@
+#
+# MC Watchdog AI — Kconfig
+#
+
+config LVX_USE_DEMO_MC_WATCHDOG
+	bool "MC Watchdog AI (Minecraft Server Monitor)"
+	default n
+	select LVX_USE_DEMO_UTILS
+	depends on GRAPHICS_LVGL
+	depends on NET_TCP
+	depends on EXAMPLES_AI_AGENT_VELA
+	---help---
+		MC Watchdog AI: Minecraft server monitoring dashboard
+		with real-time status, alerts, and voice-controlled
+		RCON management via ai_agent (VelaClaw).
+
+if LVX_USE_DEMO_MC_WATCHDOG
+
+config LVX_MC_WATCHDOG_POLL_INTERVAL
+	int "Server poll interval (seconds)"
+	default 30
+	---help---
+		How often to query server status via SLP protocol.
+
+config LVX_MC_WATCHDOG_MAX_SERVERS
+	int "Maximum tracked servers"
+	default 8
+	---help---
+		Maximum number of Minecraft servers to monitor.
+
+config LVX_MC_WATCHDOG_LATENCY_THRESHOLD
+	int "Latency alert threshold (ms)"
+	default 200
+	---help---
+		Alert when server latency exceeds this value.
+
+endif
