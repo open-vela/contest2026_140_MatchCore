@@ -7,6 +7,7 @@
 #define MC_WATCHDOG_H
 
 #include <stdint.h>
+#include <stddef.h>
 #include <stdbool.h>
 
 /* 服务器状态结构体 */

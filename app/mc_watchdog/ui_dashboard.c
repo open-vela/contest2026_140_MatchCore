@@ -5,6 +5,7 @@
 
 #include "mc_watchdog.h"
 
+#include <stdio.h>
 #include <lvgl/lvgl.h>
 
 /****************************************************************************
@@ -140,21 +141,19 @@ void ui_dashboard_init(void *parent)
   lv_obj_align(g_chart, LV_ALIGN_CENTER, 0, 0);
   lv_chart_set_type(g_chart, LV_CHART_TYPE_LINE);
   lv_chart_set_point_count(g_chart, 60);
-  lv_chart_set_range_min_value(g_chart, LV_CHART_AXIS_PRIMARY_Y, 0);
-  lv_chart_set_range_max_value(g_chart, LV_CHART_AXIS_PRIMARY_Y, 100);
-  lv_chart_set_range_min_value(g_chart, LV_CHART_AXIS_SECONDARY_Y, 0);
-  lv_chart_set_range_max_value(g_chart, LV_CHART_AXIS_SECONDARY_Y, 500);
+  lv_chart_set_range(g_chart, LV_CHART_AXIS_PRIMARY_Y, 0, 100);
+  lv_chart_set_range(g_chart, LV_CHART_AXIS_SECONDARY_Y, 0, 500);
 
   /* 在线人数系列 (主 Y 轴) */
 
   g_player_series = lv_chart_add_series(g_chart, COLOR_SERIES1,
-                                         LV_CHART_AXIS_PRIMARY_Y, NULL);
+                                         LV_CHART_AXIS_PRIMARY_Y);
   lv_chart_set_ext_y_array(g_chart, g_player_series, NULL);
 
   /* 延迟系列 (次 Y 轴) */
 
   g_latency_series = lv_chart_add_series(g_chart, COLOR_SERIES2,
-                                          LV_CHART_AXIS_SECONDARY_Y, NULL);
+                                          LV_CHART_AXIS_SECONDARY_Y);
   lv_chart_set_ext_y_array(g_chart, g_latency_series, NULL);
 
   /* 图例 */

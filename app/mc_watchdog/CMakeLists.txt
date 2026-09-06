@@ -12,6 +12,8 @@ if(CONFIG_LVX_USE_DEMO_MC_WATCHDOG)
       ui_dashboard.c
       ui_alert.c
       ai_integration.c
-    INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
+    INCLUDE_DIRECTORIES
+      ${CMAKE_CURRENT_SOURCE_DIR}
+      ${NUTTX_APPS_DIR}/packages/ai_agent/include
   )
 endif()
