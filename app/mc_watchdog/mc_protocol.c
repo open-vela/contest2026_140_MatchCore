@@ -117,7 +117,6 @@ int mc_slp_query(const char *host, uint16_t port, mc_server_info_t *info)
   int n;
   char json_buf[2048];
   char tmp[256];
-  int32_t json_len;
   struct timespec ts_start;
   struct timespec ts_end;
 
@@ -178,7 +177,6 @@ int mc_slp_query(const char *host, uint16_t port, mc_server_info_t *info)
    * Length + VarInt(0x00) + VarInt(protocol) + Host + UShort(port) + VarInt(1) */
 
   {
-    uint8_t host_buf[128];
     int host_len = (int)strlen(host);
     int body_len;
     int idx = 0;
@@ -342,7 +340,6 @@ int mc_rcon_send(const char *host, uint16_t port,
   struct sockaddr_in addr;
   struct timeval tv;
   uint8_t buf[4096];
-  int pkt_len;
   int id;
   int body_len;
   int idx;

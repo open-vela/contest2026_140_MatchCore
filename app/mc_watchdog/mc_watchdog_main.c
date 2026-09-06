@@ -114,6 +114,8 @@ static void poll_timer_cb(lv_timer_t *timer)
 
 int main(int argc, FAR char *argv[])
 {
+  lv_nuttx_dsc_t info;
+  lv_nuttx_result_t result;
   lv_obj_t *scr;
 
   (void)argc;
@@ -121,11 +123,23 @@ int main(int argc, FAR char *argv[])
 
   printf("[MC Watchdog] Starting...\n");
 
+  /* 初始化 LVGL */
+
+  lv_init();
+  lv_nuttx_dsc_init(&info);
+  lv_nuttx_init(&info, &result);
+
+  if (result.disp == NULL)
+    {
+      printf("[MC Watchdog] LVGL display init failed\n");
+      return -1;
+    }
+
   /* 初始化默认服务器配置 */
 
   init_default_servers(&g_ctx);
 
-  /* 获取当前活跃屏幕（系统 LVGL 已由 launcher 初始化） */
+  /* 获取当前活跃屏幕 */
 
   scr = lv_scr_act();
   if (!scr)
@@ -163,7 +177,14 @@ int main(int argc, FAR char *argv[])
   printf("[MC Watchdog] Initialized, polling every %ds\n",
          g_ctx.poll_interval_s);
 
-  /* 主循环由系统 LVGL 驱动，此处无需额外循环 */
+  /* LVGL 主循环 */
+
+  while (1)
+    {
+      uint32_t idle = lv_timer_handler();
+      idle = idle ? idle : 1;
+      usleep(idle * 1000);
+    }
 
   return 0;
 }
